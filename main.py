@@ -1,12 +1,22 @@
+"""Dad Joke Showdown entry.
+
+Writes one dad joke to entry.txt inside the output directory.
+The output directory comes from the MAKEFUN_OUTPUT_DIR environment
+variable and falls back to /output, matching the make.fun runner.
+"""
+
 import os
 
-JOKE = "I told my suitcase there would be no vacation this year. Now I'm dealing with emotional baggage."
+JOKE = "I used to hate beards, but then it grew on me."
+
 
 def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(JOKE)
-    os.chmod("/output/entry.txt", 0o644)
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, "entry.txt")
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(JOKE)
+
 
 if __name__ == "__main__":
     main()
